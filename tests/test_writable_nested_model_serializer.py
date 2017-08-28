@@ -134,10 +134,10 @@ class WritableNestedModelSerializerTest(TestCase):
         serializer = serializers.UserSerializer(
             instance=user,
             data={
-                'pk': user_pk,
+                'id': user_pk,
                 'username': 'new',
                 'profile': {
-                    'pk': profile_pk,
+                    'id': profile_pk,
                     'access_key': None,
                     'sites': [
                         {
@@ -146,7 +146,7 @@ class WritableNestedModelSerializerTest(TestCase):
                     ],
                     'avatars': [
                         {
-                            'pk': user.profile.avatars.earliest('pk').pk,
+                            'id': user.profile.avatars.earliest('id').pk,
                             'image': 'old-image-1.png',
                         },
                         {
@@ -158,11 +158,11 @@ class WritableNestedModelSerializerTest(TestCase):
                     ],
                     'message_set': [
                         {
-                            'pk': message_to_update_str_pk,
+                            'id': message_to_update_str_pk,
                             'message': 'Old message 1'
                         },
                         {
-                            'pk': message_to_update_pk,
+                            'id': message_to_update_pk,
                             'message': 'Old message 2'
                         },
                         {
@@ -234,7 +234,7 @@ class WritableNestedModelSerializerTest(TestCase):
                 'sites': [],
                 'avatars': [
                     {
-                        'pk': user.profile.avatars.last().id,
+                        'id': user.profile.avatars.last().id,
                         'image': 'old-image-1.png',
                     },
                     {
@@ -261,7 +261,7 @@ class WritableNestedModelSerializerTest(TestCase):
         serializer = serializers.UserSerializer(
             instance=user,
             data={
-                'pk': user.pk,
+                'id': user.pk,
                 'username': 'new',
                 'profile': None
             }
@@ -290,7 +290,7 @@ class WritableNestedModelSerializerTest(TestCase):
             instance=user,
             partial=True,
             data={
-                'pk': user_pk,
+                'id': user_pk,
                 'username': 'new',
             }
         )
@@ -345,11 +345,11 @@ class WritableNestedModelSerializerTest(TestCase):
             instance=user,
             partial=True,
             data={
-                'pk': user_pk,
+                'id': user_pk,
                 'profile': {
-                    'pk': profile_pk,
+                    'id': profile_pk,
                     'access_key': {
-                        'pk': access_key_pk,
+                        'id': access_key_pk,
                         'key': 'new',
                     }
                 },
@@ -396,9 +396,9 @@ class WritableNestedModelSerializerTest(TestCase):
             instance=user,
             partial=True,
             data={
-                'pk': user_pk,
+                'id': user_pk,
                 'profile': {
-                    'pk': profile_pk,
+                    'id': profile_pk,
                     'access_key': {
                         'key': 'new',
                     }
@@ -455,7 +455,7 @@ class WritableNestedModelSerializerTest(TestCase):
             instance=item,
             data={
                 'tags': [{
-                    'pk': item.tags.get().pk,
+                    'id': item.tags.get().pk,
                     'tag': 'the_new_tag',
                 }]
             }
@@ -516,7 +516,7 @@ class WritableNestedModelSerializerTest(TestCase):
         profile = models.Profile.objects.create(user=user)
         avatar = models.Avatar.objects.create(profile=profile)
         data = self.get_initial_data()
-        data['profile']['avatars'][0]['pk'] = avatar.pk
+        data['profile']['avatars'][0]['id'] = avatar.pk
         serializer = serializers.UserSerializer(data=data)
         self.assertTrue(serializer.is_valid())
         new_user = serializer.save()

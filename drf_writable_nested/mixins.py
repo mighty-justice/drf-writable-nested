@@ -106,7 +106,7 @@ class BaseNestedModelSerializer(serializers.ModelSerializer):
         return instances
 
     def _get_related_pk(self, data, model_class):
-        pk = data.get('pk') or data.get(model_class._meta.pk.attname)
+        pk = data.get('id') or data.get(model_class._meta.pk.attname)
 
         if pk:
             return str(pk)
@@ -148,7 +148,7 @@ class BaseNestedModelSerializer(serializers.ModelSerializer):
                 )
                 serializer.is_valid(raise_exception=True)
                 related_instance = serializer.save(**save_kwargs)
-                data['pk'] = related_instance.pk
+                data['id'] = related_instance.pk
                 new_related_instances.append(related_instance)
 
             if related_field.many_to_many:
@@ -270,14 +270,14 @@ class NestedUpdateMixin(BaseNestedModelSerializer):
                     related_field.name: instance,
                 }
 
-            current_ids = [d.get('pk') for d in related_data if d is not None]
+            current_ids = [d.get('id') for d in related_data if d is not None]
             try:
                 pks_to_delete = list(
                     model_class.objects.filter(
                         **related_field_lookup
                     ).exclude(
                         pk__in=current_ids
-                    ).values_list('pk', flat=True)
+                    ).values_list('id', flat=True)
                 )
 
                 if related_field.many_to_many:

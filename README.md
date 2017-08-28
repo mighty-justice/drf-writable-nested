@@ -70,7 +70,7 @@ class AvatarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Avatar
-        fields = ('pk', 'image',)
+        fields = ('id', 'image',)
 
 
 class SiteSerializer(serializers.ModelSerializer):
@@ -78,14 +78,14 @@ class SiteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Site
-        fields = ('pk', 'url',)
+        fields = ('id', 'url',)
 
 
 class AccessKeySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AccessKey
-        fields = ('pk', 'key',)
+        fields = ('id', 'key',)
 
 
 class ProfileSerializer(WritableNestedModelSerializer):
@@ -100,7 +100,7 @@ class ProfileSerializer(WritableNestedModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('pk', 'sites', 'avatars', 'access_key',)
+        fields = ('id', 'sites', 'avatars', 'access_key',)
 
 
 class UserSerializer(WritableNestedModelSerializer):
@@ -109,7 +109,7 @@ class UserSerializer(WritableNestedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('pk', 'profile', 'username',)
+        fields = ('id', 'profile', 'username',)
 ```
 
 Also, you can use `NestedCreateMixin` or `NestedUpdateMixin` from this package
@@ -158,31 +158,31 @@ print(user_serializer.data)
 
 ```python
 {
-    'pk': 1,
+    'id': 1,
     'username': 'test',
     'profile': {
-        'pk': 1,
+        'id': 1,
         'access_key': {
-            'pk': 1,
+            'id': 1,
             'key': 'key'
         },
         'sites': [
             {
-                'pk': 1,
+                'id': 1,
                 'url': 'http://google.com',
             },
             {
-                'pk': 2,
+                'id': 2,
                 'url': 'http://yahoo.com',
             },
         ],
         'avatars': [
             {
-                'pk': 1,
+                'id': 1,
                 'image': 'image-1.png',
             },
             {
-                'pk': 2,
+                'id': 2,
                 'image': 'image-2.png',
             },
         ],

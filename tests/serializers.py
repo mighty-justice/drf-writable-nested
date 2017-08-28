@@ -9,14 +9,14 @@ class AvatarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Avatar
-        fields = ('pk', 'image',)
+        fields = ('id', 'image',)
 
 
 class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Message
-        fields = ('pk', 'message',)
+        fields = ('id', 'message',)
 
 
 class SiteSerializer(serializers.ModelSerializer):
@@ -24,14 +24,14 @@ class SiteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Site
-        fields = ('pk', 'url',)
+        fields = ('id', 'url',)
 
 
 class AccessKeySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.AccessKey
-        fields = ('pk', 'key',)
+        fields = ('id', 'key',)
 
 
 class ProfileSerializer(WritableNestedModelSerializer):
@@ -49,7 +49,7 @@ class ProfileSerializer(WritableNestedModelSerializer):
 
     class Meta:
         model = models.Profile
-        fields = ('pk', 'sites', 'avatars', 'access_key', 'message_set',)
+        fields = ('id', 'sites', 'avatars', 'access_key', 'message_set',)
 
 
 class UserSerializer(WritableNestedModelSerializer):
@@ -58,7 +58,7 @@ class UserSerializer(WritableNestedModelSerializer):
 
     class Meta:
         model = models.User
-        fields = ('pk', 'profile', 'username',)
+        fields = ('id', 'profile', 'username',)
 
 
 class CustomSerializer(UserSerializer):
@@ -80,7 +80,7 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Tag
         fields = (
-            'pk',
+            'id',
             'tag',
         )
 
